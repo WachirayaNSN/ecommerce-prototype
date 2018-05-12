@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <title>Add Product Form</title>
+  </head>
+  <body>
+    <h1 class="text-center">Add Product Form</h1>
+    <div class="container">
+      <form id="add-product-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input class="form-control" id="name" placeholder="Name">
+        </div>
+        <div class="form-group">
+          <label for="image">Image (link)</label>
+          <input class="form-control" id="image" placeholder="Image">
+        </div>
+        <div class="form-group">
+          <label for="price">Price (THB)</label>
+          <input type="number" class="form-control" id="price" placeholder="Price">
+        </div>
+        <div class="form-group">
+          <label for="detail">Detail</label>
+          <textarea class="form-control" id="detail" placeholder="Detail"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Product</button>
+      </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script>
+      $(function(){
+        $('#add-product-form').submit(function(event) {
+          event.preventDefault()
+          var name = $('#name').val();
+          var image = $('#image').val();
+          var price = $('#price').val();
+          var detail = $('#detail').val();
+          if (name && image && price && detail) {
+            var product = {
+              name: name,
+              image: image,
+              price: price,
+              detail: detail
+            };
+            var products = localStorage.getItem('products')
+            if (!products) {
+              products = [product]
+            } else {
+              products = JSON.parse(products)
+              products.push(product)
+            }
+            localStorage.setItem('products', JSON.stringify(products))
+            window.location.href = 'products.html'
+          } else {
+            alert('Please fill all blank !!!')
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
