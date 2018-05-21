@@ -12,11 +12,11 @@
   </head>
   <body>
     <h1 class="text-center">Orders List</h1>
-    <div class="container">
-      <h2 id="customer-name"></h2>
+    <div id="content" class="container">
+      <!-- <h2 id="customer-name"></h2>
       <p id="customer-address"></p>
       <div class="row">
-      </div>
+      </div> -->
     </div>
 
     <!-- Optional JavaScript -->
@@ -26,6 +26,19 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script>
       function getHtml(data) {
+        var ui = ''
+        for (var i = 0; i < data.length; i++) {
+          ui = ui + `
+            <h2>${data[i].name}</h2>
+            <p>${data[i].address}</p>
+            <div class="row">
+              ${getProducts(data[i].products)}
+            </div>
+          `
+        }
+        return ui
+      }
+      function getProducts(data) {
         var html = ''
         for (var i = 0; i < data.length; i++) {
           html = html + `
@@ -44,11 +57,9 @@
       $(function(){
         var orders = localStorage.getItem('orders')
         orders = JSON.parse(orders)
-        var order = orders[1]
-        $('#customer-name').html(order.name)
-        $('#customer-address').html(order.address)
-        $('.row').html(getHtml(order.products))
-        console.log(products)
+        orders = orders.filter((order) => !!order.products)
+        console.log(orders)
+        $('#content').html(getHtml(orders))
       })
     </script>
   </body>
